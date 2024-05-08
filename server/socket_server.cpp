@@ -1,3 +1,14 @@
+/*
+ * @Author: Dunwei Liu llldddwwwc@outlook.com
+ * @Date: 2024-05-08 20:58:42
+ * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
+ * @LastEditTime: 2024-05-08 21:35:57
+ * @FilePath: /repose/CPP/server/src/socket_server.cpp
+ * @Description: Socket服务端实现
+ * 
+ * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
+ */
+
 #include "socket_server.h"
 #include <iostream>
 #include <cstdio>
@@ -65,4 +76,26 @@ int SocketServer::Listen(int maxlink) {
                 return -1;    
         }
         return 0;
+}
+
+int SocketServer::Accept() {
+        connfd = accept(sockfd, NULL, NULL);
+        if (-1 == connfd) {
+                std::cout << "Accept error(" << errno << "): " << strerror(errno) << std::endl; 
+                return -1;   
+        }
+        return 0;
+}
+
+int SocketServer::Recv() {
+        bzero(recv_buff, BUFFSIZE);
+        recv(connfd, recv_buff, BUFFSIZE-1, 0);
+}
+
+int SocketServer::Send() {
+        return send(connfd, send_buff, strlen((char *)send_buff), 0);
+}
+
+void SocketServer::Close() {
+        close(connfd);
 }
