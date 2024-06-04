@@ -2,8 +2,8 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:52:55
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-05-08 21:44:10
- * @FilePath: /repose/CPP/server/src/main.cpp
+ * @LastEditTime: 2024-06-04 22:19:17
+ * @FilePath: /CPP/server/main.cpp
  * @Description: Socket 服务端主函数
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -13,19 +13,20 @@
 #include <cstring>
 #include "socket_server.h"
 
-#define MAXLINK 1024
+#define MAXLINK 20
 SocketServer socket_server;
 
 int main() {
-        std::cout << "Please input ip and port to listen!" << std::endl;
-        std::string listenip, port;
-        std::cin >> listenip;
-        std::cin >> port;
+        std::cout << "Please input port to listen!" << std::endl;
+        std::string port;
+        // std::cin >> listenip;
+        // std::cin >> port;
+        port = "1234";
 
         if (socket_server.Socket() != 0) {
                 return -1;
         }
-        if (socket_server.Bind(listenip, port) != 0) {
+        if (socket_server.Bind(port) != 0) {
                 return -1;
         }
         if (socket_server.Listen(MAXLINK) != 0) {
@@ -39,11 +40,12 @@ int main() {
         memcpy(socket_server.send_buff, (void *)send_str.c_str(), send_str.size());
         if (socket_server.Send() == -1) {
                 std::cout << "Send fail!" << std::endl;
+        } else {
+                std::cout << "Send success!" << std::endl;
         }
-        std::string recv_str;
         int recv_num = socket_server.Recv();
-        memcpy((void *)recv_str.c_str(), socket_server.recv_buff, recv_num);
-        std::cout << recv_str << std::endl;
+        std::cout << "recv_num " << recv_num << " " << socket_server.recv_buff << std::endl;
         socket_server.Close();
+        
         return 0;
 }

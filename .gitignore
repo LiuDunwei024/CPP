@@ -1,0 +1,5 @@
+.vscode
+client/client
+client/socket_client.o
+server/server
+server/socket_server.o

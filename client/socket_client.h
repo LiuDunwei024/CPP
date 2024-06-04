@@ -2,8 +2,8 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 21:00:59
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-05-08 21:41:39
- * @FilePath: /repose/CPP/client/hdr/socket_client.h
+ * @LastEditTime: 2024-06-04 22:12:21
+ * @FilePath: /CPP/client/socket_client.h
  * @Description: Socket客户端头文件
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -23,7 +23,7 @@ public:
 
         //建立连接
         int Connect(std::string ip, std::string port);
-        int Connect(int ip, int port, int type);
+        int Connect(std::string ip, int port, int type);
 
         //接收
         int Recv();

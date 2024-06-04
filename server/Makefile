@@ -1,12 +1,13 @@
 CFLAGS += -g -Wall
-PROGS = socket_server
+PROGS = socket_server.o server
 
 all: $(PROGS)
 
-server: 
+socket_server.o: socket_server.cpp socket_server.h
+	g++ $(CFLAGS) -c -o $@ $<
 
-socket_server: main.cpp
-	g++ $(CFLAGS) -o $@ $<
+server: main.cpp
+	g++ $(CFLAGS) -o $@ $< socket_server.o
 
 clean:
-	rm -rf socket_server
+	rm -rf server socket_server.o

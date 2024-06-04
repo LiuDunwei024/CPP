@@ -2,8 +2,8 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:59:41
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-05-08 21:37:38
- * @FilePath: /repose/CPP/server/hdr/socket_server.h
+ * @LastEditTime: 2024-06-04 21:46:55
+ * @FilePath: /CPP/server/socket_server.h
  * @Description: Socket服务端头文件
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -22,8 +22,8 @@ public:
         int Socket();
 
         //绑定
-        int Bind(std::string ip, std::string port);
-        int Bind(int ip, int port, int type);
+        int Bind(std::string port);
+        int Bind(int port, int type);
         
         //监听
         int Listen(int maxlink);
@@ -49,6 +49,8 @@ private:
         int sockfd;
         //服务端绑定监听ip
         struct sockaddr_in serveraddr;
+        //服务端绑定监听ip
+        struct sockaddr_in clientaddr;
         //建立连接接收、发送文件描述符
         int connfd;
 };

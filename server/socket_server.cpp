@@ -2,8 +2,8 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:58:42
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-05-08 21:35:57
- * @FilePath: /repose/CPP/server/src/socket_server.cpp
+ * @LastEditTime: 2024-06-04 22:20:23
+ * @FilePath: /CPP/server/socket_server.cpp
  * @Description: Socket服务端实现
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -32,36 +32,17 @@ int SocketServer::Socket() {
         return 0;
 }
 
-int SocketServer::Bind(std::string ip, std::string port) {
-        int temp_ip, temp_port;
-        int type;
-        if (ip == "") {
-                temp_ip = -1;
-                type =AF_INET;
-        } else {
-                struct in_addr ipv4;
-                struct in6_addr ipv6;
-                if (inet_pton(AF_INET, ip.c_str(), &ipv4)) {
-                        //ip为ipv4
-                        inet_pton(AF_INET, ip.c_str(), &temp_ip);
-                        type = AF_INET;
-                } else if (inet_pton(AF_INET6, ip.c_str(), &ipv6)) {
-                        //ip为ipv6
-                        inet_pton(AF_INET6, ip.c_str(), &temp_ip);
-                        type = AF_INET6;
-                } else {
-                        return -1;
-                }
-        }
+int SocketServer::Bind(std::string port) {
+        int temp_port;
         temp_port = atoi(port.c_str());
 
-        return Bind(temp_ip, temp_port, type);
+        return Bind(temp_port, AF_INET);
 }
 
-int SocketServer::Bind(int ip, int port, int type) {
+int SocketServer::Bind(int port, int type) {
         bzero(&serveraddr, sizeof(serveraddr));
         serveraddr.sin_family = type;//ipv4或ipv6
-        serveraddr.sin_addr.s_addr = (ip == -1 ? htonl(INADDR_ANY) : htonl(ip));
+        serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
         serveraddr.sin_port = htons(port);
         if (-1 == bind(sockfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr))) {
                 std::cout << "Bind error(" << errno << "): " << strerror(errno) << std::endl; 
@@ -79,7 +60,8 @@ int SocketServer::Listen(int maxlink) {
 }
 
 int SocketServer::Accept() {
-        connfd = accept(sockfd, NULL, NULL);
+        socklen_t length = sizeof(clientaddr);//需要的内存大小
+        connfd = accept(sockfd, (struct sockaddr *)&clientaddr, &length);
         if (-1 == connfd) {
                 std::cout << "Accept error(" << errno << "): " << strerror(errno) << std::endl; 
                 return -1;   
@@ -89,7 +71,7 @@ int SocketServer::Accept() {
 
 int SocketServer::Recv() {
         bzero(recv_buff, BUFFSIZE);
-        recv(connfd, recv_buff, BUFFSIZE-1, 0);
+        return recv(connfd, recv_buff, BUFFSIZE-1, 0);
 }
 
 int SocketServer::Send() {
@@ -98,4 +80,5 @@ int SocketServer::Send() {
 
 void SocketServer::Close() {
         close(connfd);
+        close(sockfd);
 }

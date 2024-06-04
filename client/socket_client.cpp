@@ -3,7 +3,7 @@
  * @Date: 2024-05-08 21:01:07
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
  * @LastEditpTime: 2024-05-08 21:09:47
- * @FilePath: /repose/CPP/client/socket_client.cpp
+ * @FilePath: /CPP/client/socket_client.cpp
  * @Descrition: Socket客户端实现
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -29,35 +29,17 @@ int SocketClient::Socket() {
 }
 
 int SocketClient::Connect(std::string ip, std::string port) {
-        int temp_ip, temp_port;
-        int type;
-        if (ip == "") {
-                temp_ip = -1;
-                type =AF_INET;
-        } else {
-                struct in_addr ipv4;
-                struct in6_addr ipv6;
-                if (inet_pton(AF_INET, ip.c_str(), &ipv4)) {
-                        //ip为ipv4
-                        inet_pton(AF_INET, ip.c_str(), &temp_ip);
-                        type = AF_INET;
-                } else if (inet_pton(AF_INET6, ip.c_str(), &ipv6)) {
-                        //ip为ipv6
-                        inet_pton(AF_INET6, ip.c_str(), &temp_ip);
-                        type = AF_INET6;
-                } else {
-                        return -1;
-                }
-        }
+        int temp_port;
+        int type = AF_INET;;
         temp_port = atoi(port.c_str());
 
-        return Connect(temp_ip, temp_port, type);
+        return Connect(ip, temp_port, type);
 }
 
-int SocketClient::Connect(int ip, int port, int type) {
+int SocketClient::Connect(std::string ip, int port, int type) {
         bzero(&serveraddr, sizeof(serveraddr));
         serveraddr.sin_family = type;//ipv4或ipv6
-        serveraddr.sin_addr.s_addr = htonl(ip);
+        serveraddr.sin_addr.s_addr = inet_addr(ip.c_str());
         serveraddr.sin_port = htons(port);
         if (-1 == connect(sockfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr))) {
                 std::cout << "Connect error(" << errno << "): " << strerror(errno) << std::endl; 
