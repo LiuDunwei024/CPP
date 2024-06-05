@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:58:42
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-04 22:20:23
+ * @LastEditTime: 2024-06-05 21:59:48
  * @FilePath: /CPP/server/socket_server.cpp
  * @Description: Socket服务端实现
  * 
@@ -65,6 +65,11 @@ int SocketServer::Accept() {
         if (-1 == connfd) {
                 std::cout << "Accept error(" << errno << "): " << strerror(errno) << std::endl; 
                 return -1;   
+        } else {
+                char ip[64] = {0};
+                inet_ntop (AF_INET, &clientaddr.sin_addr.s_addr, ip, sizeof(ip));
+                std::cout << "Client ip : " << ip << ", client port : " << clientaddr.sin_port << std::endl;
+                std::cout << "Accept client connection!" << std::endl;
         }
         return 0;
 }
