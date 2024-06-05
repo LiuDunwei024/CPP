@@ -44,6 +44,9 @@ int SocketClient::Connect(std::string ip, int port, int type) {
         if (-1 == connect(sockfd, (struct sockaddr*)&serveraddr, sizeof(serveraddr))) {
                 std::cout << "Connect error(" << errno << "): " << strerror(errno) << std::endl; 
                 return -1;  
+        } else {
+                std::cout << "Server ip: " << ip << ", server port: " << port << std::endl;
+                std::cout << "Connect server successfully!" << std::endl;
         }
         return 0;
 }
