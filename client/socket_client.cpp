@@ -30,7 +30,7 @@ int SocketClient::Socket() {
 
 int SocketClient::Connect(std::string ip, std::string port) {
         int temp_port;
-        int type = AF_INET;;
+        int type = AF_INET;
         temp_port = atoi(port.c_str());
 
         return Connect(ip, temp_port, type);
