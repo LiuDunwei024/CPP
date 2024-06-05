@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 21:20:44
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-04 22:18:40
+ * @LastEditTime: 2024-06-05 21:44:07
  * @FilePath: /CPP/client/main.cpp
  * @Description: Socket 客户端主函数
  * 
@@ -15,12 +15,14 @@
 
 SocketClient socket_client;
 
-int main() {
-        std::cout << "Please input server ip and port!" << std::endl;
+int main(int argc, char *argv[]) {
+        if (argc < 3) {
+                std::cout << "Usage: ./client ip port" << std::endl;
+                return -1;
+        }
         std::string serverip, port;
-        // std::cin >> serverip >> port;
-        serverip = "127.0.0.1";
-        port = "1234";
+        serverip = argv[1];
+        port = argv[2];
 
         if (socket_client.Socket() != 0) {
                 return -1;

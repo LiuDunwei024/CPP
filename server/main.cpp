@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:52:55
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-04 22:19:17
+ * @LastEditTime: 2024-06-05 21:45:17
  * @FilePath: /CPP/server/main.cpp
  * @Description: Socket 服务端主函数
  * 
@@ -16,12 +16,13 @@
 #define MAXLINK 20
 SocketServer socket_server;
 
-int main() {
-        std::cout << "Please input port to listen!" << std::endl;
+int main(int argc, char *argv[]) {
+        if (argc < 2) {
+                std::cout << "Usage: ./server port" << std::endl;
+                return -1;
+        }
         std::string port;
-        // std::cin >> listenip;
-        // std::cin >> port;
-        port = "1234";
+        port = argv[1];
 
         if (socket_server.Socket() != 0) {
                 return -1;
