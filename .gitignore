@@ -1,5 +1,7 @@
 .vscode
 client/client
-client/socket_client.o
+*.o
 server/server
-server/socket_server.o
+multi_thread/server_multi_thread
+multi_thread/client_multi_thread
+
