@@ -19,6 +19,20 @@
 #include <netinet/in.h>
 #include <arpa/inet.h> 
 
+void set_timeout(int sock_fd, int timeout) {
+        struct timeval tv;
+        tv.tv_sec = TIMEOUT;
+        tv.tv_usec = 0;
+
+        if (setsockopt(sock_fd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv)) < 0) {
+                std::cout << "接收超时设置错误！" << std::endl;
+        }
+
+        if (setsockopt(sock_fd, SOL_SOCKET, SO_SNDTIMEO, (const char *)&tv, sizeof(tv)) < 0) {
+                std::cout << "发送超时设置错误！" << std::endl;
+        }
+}
+
 int SocketClient::Socket() {
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
         if (-1 == sockfd) {
@@ -48,6 +62,7 @@ int SocketClient::Connect(std::string ip, int port, int type) {
                 std::cout << "Server ip: " << ip << ", server port: " << port << std::endl;
                 std::cout << "Connect server successfully!" << std::endl;
         }
+        set_timeout(sockfd, TIMEOUT);
         return 0;
 }
 

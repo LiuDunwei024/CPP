@@ -13,6 +13,8 @@
 #include <string>
 
 #define BUFFSIZE 2048
+#define TIMEOUT 30
+
 class SocketServer {
 public:
         SocketServer() {}
@@ -37,8 +39,12 @@ public:
         //发送
         int Send();
 
-        void Close();
+        void CloseListenFd();
+
+        void CloseConnectFd();
         
+        void Close();
+
         //接收缓存
         uint8_t recv_buff[BUFFSIZE];
 

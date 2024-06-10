@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 21:00:59
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-04 22:12:21
+ * @LastEditTime: 2024-06-10 14:18:07
  * @FilePath: /CPP/client/socket_client.h
  * @Description: Socket客户端头文件
  * 
@@ -12,6 +12,7 @@
 #include <string>
 
 #define BUFFSIZE 2048
+#define TIMEOUT 30
 
 class SocketClient {
 public:

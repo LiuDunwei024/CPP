@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:58:42
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-09 22:44:59
+ * @LastEditTime: 2024-06-10 18:02:24
  * @FilePath: /CPP/server/socket_server.cpp
  * @Description: Socket服务端实现
  * 
@@ -22,6 +22,19 @@
 #include <arpa/inet.h> 
 #include <signal.h>
 
+void set_timeout(int sock_fd, int timeout) {
+        struct timeval tv;
+        tv.tv_sec = TIMEOUT;
+        tv.tv_usec = 0;
+
+        if (setsockopt(sock_fd, SOL_SOCKET, SO_RCVTIMEO, (const char *)&tv, sizeof(tv)) < 0) {
+                std::cout << "接收超时设置错误！" << std::endl;
+        }
+
+        if (setsockopt(sock_fd, SOL_SOCKET, SO_SNDTIMEO, (const char *)&tv, sizeof(tv)) < 0) {
+                std::cout << "发送超时设置错误！" << std::endl;
+        }
+}
 
 int SocketServer::Socket() {
         sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -68,9 +81,10 @@ int SocketServer::Accept() {
         } else {
                 char ip[64] = {0};
                 inet_ntop (AF_INET, &clientaddr.sin_addr.s_addr, ip, sizeof(ip));
-                std::cout << "Client ip : " << ip << ", client port : " << ntohs(clientaddr.sin_port) << std::endl;
+                std::cout << "Client ip : " << ip << ", connect port : " << ntohs(clientaddr.sin_port) << std::endl;
                 std::cout << "Accept client connection!" << std::endl;
         }
+        set_timeout(connfd, TIMEOUT);
         return 0;
 }
 
@@ -83,7 +97,15 @@ int SocketServer::Send() {
         return send(connfd, send_buff, strlen((char *)send_buff), 0);
 }
 
-void SocketServer::Close() {
-        close(connfd);
+void SocketServer::CloseListenFd() {
         close(sockfd);
+}
+
+void SocketServer::CloseConnectFd() {
+        close(connfd);
+}
+
+void SocketServer::Close() {
+        CloseConnectFd();
+        CloseListenFd();
 }
