@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-09 21:35:05
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-10 20:43:24
+ * @LastEditTime: 2024-06-15 22:50:47
  * @FilePath: /CPP/multi_thread/server_test.cpp
  * @Description: 
  * 
@@ -37,20 +37,12 @@ int init_socket() {
         return 0;
 }
 
-int connect_socket() {
-        if (-1 == server.Listen(MAX_LINK)) {
-                return -1;
-        }
-
-        if (-1 == server.Accept()) {
-                return -1;
-        }
-
-        return 0;
+int accept_connect() {
+        return server.Accept();
 }
+
 void close_socket() {
         server.CloseListenFd();
-        return ;
 }
 
 void *send_message(void *arg) {
@@ -67,7 +59,6 @@ void *send_message(void *arg) {
                         break;
                 }
         }
-        server.CloseConnectFd();
         return NULL;
 }
 
@@ -75,10 +66,9 @@ void *recv_message(void *arg) {
         while (1) {
                 while(0 != server.Recv()) {
                         std::cout << "Recv message : " << server.recv_buff << std::endl;
-                        break;
+                        return NULL;
                 }
         }
-        server.CloseConnectFd();
         return NULL;
 }
 
@@ -88,14 +78,15 @@ int main(int argc, char *argv[]) {
         }
 
         while (1) {
-                if (-1 == connect_socket()) {
-                        return -1;
+                if (0 == accept_connect()){
+                        pthread_create(&read_thread, NULL, recv_message, NULL);
+                        pthread_create(&write_thread, NULL, send_message, NULL);
+                        pthread_join(read_thread, NULL);
+                        pthread_join(write_thread, NULL);
+                        server.CloseConnectFd();
+                } else if (-1 == accept_connect()){
+                        break;
                 }
-                pthread_create(&read_thread, NULL, recv_message, NULL);
-                pthread_create(&write_thread, NULL, send_message, NULL);
-                pthread_join(read_thread, NULL);
-                pthread_join(write_thread, NULL);
-                server.CloseConnectFd();
         }
 
         close_socket();
