@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 21:00:59
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-16 16:56:55
+ * @LastEditTime: 2024-06-16 21:28:47
  * @FilePath: /CPP/client/socket_client.h
  * @Description: Socket客户端头文件
  * 
@@ -24,6 +24,7 @@ public:
 
         //建立连接
         int Connect(std::string ip, std::string port);
+        int Connect(std::string ip, int port);
         int Connect(std::string ip, int port, int type);
 
         //接收

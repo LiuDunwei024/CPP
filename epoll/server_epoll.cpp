@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-16 16:02:14
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-16 21:25:36
+ * @LastEditTime: 2024-06-16 21:30:37
  * @FilePath: /CPP/epoll/server_epoll.cpp
  * @Description: epoll 服务端
  * 
@@ -21,7 +21,7 @@
 #define MAXLINE 10
 #define OPEN_MAX 100
 #define LISTENQ 20
-#define SERVER_PORT "2048"
+#define SERVER_PORT 2048
 #define INFIM 1000
 
 SocketServer socket_server;
@@ -41,7 +41,7 @@ void setnonblocking(int sock) {
 }
 
 int main(int argc, char *argv[]) {
-        int epfd, nfds, listenfd;
+        int epfd, nfds;
         //epoll_event结构体，ev用于注册事件，events数组用于回传要处理的事件
         struct epoll_event ev, events[20];
         //生成用于处理accpet的epoll专用的文件描述符，指定生成描述符的最大范围为256

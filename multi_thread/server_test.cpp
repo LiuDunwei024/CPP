@@ -52,7 +52,7 @@ void *send_message(void *arg) {
                 memset(server.send_buff, 0, BUFFSIZE);
                 memcpy(server.send_buff, send_str.c_str(), send_str.size());
                 server.send_buff[send_str.size()] = '\0';
-                if (server.Send() == send_str.size()) {
+                if (server.Send() == (int) send_str.size()) {
                         std::cout << "\"" <<send_str << "\" has been sent successfully!" << std::endl;
                         break;
                 } else {

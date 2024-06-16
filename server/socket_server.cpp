@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:58:42
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-10 18:02:24
+ * @LastEditTime: 2024-06-16 21:29:27
  * @FilePath: /CPP/server/socket_server.cpp
  * @Description: Socket服务端实现
  * 
@@ -50,6 +50,10 @@ int SocketServer::Bind(std::string port) {
         temp_port = atoi(port.c_str());
 
         return Bind(temp_port, AF_INET);
+}
+
+int SocketServer::Bind(int port) {
+        return Bind(port, AF_INET);
 }
 
 int SocketServer::Bind(int port, int type) {

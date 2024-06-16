@@ -50,6 +50,14 @@ int SocketClient::Connect(std::string ip, std::string port) {
         return Connect(ip, temp_port, type);
 }
 
+int SocketClient::Connect(std::string ip, int port) {
+        int temp_port;
+        int type = AF_INET;
+        temp_port = port;
+
+        return Connect(ip, temp_port, type);
+}
+
 int SocketClient::Connect(std::string ip, int port, int type) {
         bzero(&serveraddr, sizeof(serveraddr));
         serveraddr.sin_family = type;//ipv4或ipv6

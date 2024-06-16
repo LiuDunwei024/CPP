@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:59:41
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-16 16:57:04
+ * @LastEditTime: 2024-06-16 21:29:09
  * @FilePath: /CPP/server/socket_server.h
  * @Description: Socket服务端头文件
  * 
@@ -25,6 +25,7 @@ public:
 
         //绑定
         int Bind(std::string port);
+        int Bind(int port);
         int Bind(int port, int type);
         
         //监听

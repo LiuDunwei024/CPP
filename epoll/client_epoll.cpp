@@ -2,8 +2,8 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-09 21:35:05
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-10 20:35:37
- * @FilePath: /CPP/multi_thread/client_test.cpp
+ * @LastEditTime: 2024-06-16 21:31:20
+ * @FilePath: /CPP/epoll/client_epoll.cpp
  * @Description: 
  * 
  * Copyright (c) 2024 by Dunwei Liu llldddwwwc@outlook.com, All Rights Reserved. 
@@ -37,8 +37,8 @@ void *send_message(void *arg) {
                 std::cin >> send_str;
                 memset(client.send_buff, 0, BUFFSIZE);
                 memcpy(client.send_buff, send_str.c_str(), send_str.size());
-                client.send_buff[send_str.size()] == '\0';
-                if (client.Send() == send_str.size()) {
+                client.send_buff[send_str.size()] = '\0';
+                if (client.Send() == (int) send_str.size()) {
                         std::cout << "\"" <<send_str << "\" has been sent successfully!" << std::endl;
                         return NULL;
                 }
