@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:59:41
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-04 21:46:55
+ * @LastEditTime: 2024-06-16 16:57:04
  * @FilePath: /CPP/server/socket_server.h
  * @Description: Socket服务端头文件
  * 
@@ -50,7 +50,7 @@ public:
 
         //发送缓存
         uint8_t send_buff[BUFFSIZE];
-private:
+
         //创建socket的文件描述符
         int sockfd;
         //服务端绑定监听ip

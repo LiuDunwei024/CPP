@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 21:00:59
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-10 14:18:07
+ * @LastEditTime: 2024-06-16 16:56:55
  * @FilePath: /CPP/client/socket_client.h
  * @Description: Socket客户端头文件
  * 
@@ -38,7 +38,7 @@ public:
         uint8_t recv_buff[BUFFSIZE];
         //发送缓存
         uint8_t send_buff[BUFFSIZE];
-private:
+
         //创建socket的文件描述符
         int sockfd;
         //连接的服务端ip
