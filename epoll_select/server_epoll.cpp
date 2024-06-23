@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-19 21:59:21
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-23 18:27:59
+ * @LastEditTime: 2024-06-23 22:14:29
  * @FilePath: /CPP/epoll_select/server_epoll.cpp
  * @Description:  server epoll实现的 主要做两件事1）等待客户端连接 2）接收客户端的数据并且回射
  * 
@@ -112,7 +112,6 @@ int main(int argc, char *argv[]) {
                                 if (server.connfd < 0) {
                                         hand_error("server.connfd");
                                 }
-                                int num = 0;
                                 int num = server.Recv();
                                 if (num == -1) {
                                         hand_error("read have some problem:");
