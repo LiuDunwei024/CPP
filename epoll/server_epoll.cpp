@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-16 16:02:14
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-16 21:30:37
+ * @LastEditTime: 2024-06-19 21:40:46
  * @FilePath: /CPP/epoll/server_epoll.cpp
  * @Description: epoll 服务端
  * 
@@ -40,7 +40,7 @@ void setnonblocking(int sock) {
         }
 }
 
-int main(int argc, char *argv[]) {
+void epoll_task() {
         int epfd, nfds;
         //epoll_event结构体，ev用于注册事件，events数组用于回传要处理的事件
         struct epoll_event ev, events[20];
@@ -99,5 +99,10 @@ int main(int argc, char *argv[]) {
                 }
         }
 
+        return ;
+}
+
+int main(int argc, char *argv[]) {
+        epoll_task();
         return 0;
 }
