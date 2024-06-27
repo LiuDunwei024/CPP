@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-23 18:28:57
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-23 18:47:59
+ * @LastEditTime: 2024-06-27 22:21:40
  * @FilePath: /CPP/epoll_select/client_select.cpp
  * @Description: client select实现
  * 
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
                 FD_SET(stdinof, &rset);
                 nready = select(maxfd+1, &rset, NULL, NULL, NULL);
                 cout << "nready = " << nready << " maxfd = " << maxfd << endl;
-                if (nready == 1) {
+                if (nready == -1) {
                         break;
                 } else if (nready == 0) {
                         continue;

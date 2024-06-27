@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-06-19 21:59:21
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-23 22:14:29
+ * @LastEditTime: 2024-06-27 22:05:53
  * @FilePath: /CPP/epoll_select/server_epoll.cpp
  * @Description:  server epoll实现的 主要做两件事1）等待客户端连接 2）接收客户端的数据并且回射
  * 
@@ -24,7 +24,7 @@ int setblock(int sock) {
         return 0;
 }
 
-int setnoblock(int sock) {
+int setnoblock(int sock) { //设置非阻塞模式
         int ret = fcntl(sock, F_SETFL, O_NONBLOCK);
         if (ret < 0) {
                 hand_error("setnonblock");
@@ -99,7 +99,7 @@ int main(int argc, char *argv[]) {
                                 if (Accept_Socket() < 0) {
                                         hand_error("accept");
                                 }
-                                cout << "count = " << count++;
+                                cout << "count = " << count++ << endl;
                                 clients.push_back(server.connfd);
                                 setnoblock(server.connfd); //设置为非阻塞模式
                                 ev.data.fd = server.connfd; //将连接也加入epoll的监听队列

@@ -2,7 +2,7 @@
  * @Author: Dunwei Liu llldddwwwc@outlook.com
  * @Date: 2024-05-08 20:58:42
  * @LastEditors: Dunwei Liu llldddwwwc@outlook.com
- * @LastEditTime: 2024-06-16 21:29:27
+ * @LastEditTime: 2024-06-27 22:09:29
  * @FilePath: /CPP/server/socket_server.cpp
  * @Description: Socket服务端实现
  * 
@@ -33,6 +33,11 @@ void set_timeout(int sock_fd, int timeout) {
 
         if (setsockopt(sock_fd, SOL_SOCKET, SO_SNDTIMEO, (const char *)&tv, sizeof(tv)) < 0) {
                 std::cout << "发送超时设置错误！" << std::endl;
+        }
+        
+        int on = 1;
+        if (setsockopt(sock_fd, SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on)) < 0) {
+                std::cout << "setsockopt错误!" << std::endl;
         }
 }
 
